@@ -1,2 +1,17 @@
-# boss-package-pro
-A complete web application with Firebase authentication, admin dashboard, and Cloudinary image management
+# Node
+node_modules/
+
+# Firebase
+.firebase/
+.firebaserc.local
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*

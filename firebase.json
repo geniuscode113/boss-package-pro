@@ -1,0 +1,101 @@
+document.addEventListener("DOMContentLoaded", async () => {
+  const authMode = document.getElementById("authMode");
+  const logoutButton = document.getElementById("logoutButton");
+
+  const ensureAdminAccess = () => {
+    const session = window.BossPackagePro.getActiveAdminSession();
+    if (!session || !session.loggedIn) {
+      window.location.href = "login.html";
+      return false;
+    }
+
+    if (authMode) {
+      authMode.textContent = session.mode === "firebase" ? "Firebase mode" : "Demo mode";
+    }
+
+    return true;
+  };
+
+  if (!ensureAdminAccess()) {
+    return;
+  }
+
+  if (logoutButton) {
+    logoutButton.addEventListener("click", async () => {
+      await window.BossPackagePro.logoutAdmin();
+    });
+  }
+
+  const orders = [
+    { customer: "Mariam J", service: "Express Delivery", status: "Complete", amount: 65000 },
+    { customer: "Musa T", service: "Retail Support", status: "Pending", amount: 32000 },
+    { customer: "Aisha K", service: "Bulk Packaging", status: "Processing", amount: 95000 },
+    { customer: "John D", service: "Local Delivery", status: "Complete", amount: 44000 },
+  ];
+
+  const inventory = [
+    { item: "Packaging Boxes", quantity: 150 },
+    { item: "Courier Bags", quantity: 90 },
+    { item: "Labels", quantity: 250 },
+    { item: "Tape Rolls", quantity: 60 },
+  ];
+
+  const totalOrders = orders.length;
+  const completedOrders = orders.filter((order) => order.status === "Complete").length;
+  const pendingOrders = orders.filter((order) => order.status === "Pending").length;
+  const totalRevenue = orders.reduce((sum, order) => sum + order.amount, 0);
+
+  document.getElementById("totalOrders").textContent = totalOrders;
+  document.getElementById("completedOrders").textContent = completedOrders;
+  document.getElementById("pendingOrders").textContent = pendingOrders;
+  document.getElementById("totalRevenue").textContent = `TZS ${totalRevenue.toLocaleString()}`;
+
+  const ordersTableBody = document.getElementById("ordersTableBody");
+  if (ordersTableBody) {
+    ordersTableBody.innerHTML = orders
+      .map((order) => {
+        const statusClass = order.status.toLowerCase() === "complete"
+          ? "complete"
+          : order.status.toLowerCase() === "pending"
+            ? "pending"
+            : "processing";
+
+        return `
+          <tr>
+            <td>${order.customer}</td>
+            <td>${order.service}</td>
+            <td><span class="status-pill ${statusClass}">${order.status}</span></td>
+            <td>TZS ${order.amount.toLocaleString()}</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  const inventoryList = document.getElementById("inventoryList");
+  if (inventoryList) {
+    inventoryList.innerHTML = inventory
+      .map((item) => `
+        <li>
+          <span>${item.item}</span>
+          <strong>${item.quantity}</strong>
+        </li>
+      `)
+      .join("");
+  }
+
+  const chartBars = document.getElementById("chartBars");
+  const monthValues = [42, 64, 58, 70, 86, 96, 88];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
+
+  if (chartBars) {
+    chartBars.innerHTML = months
+      .map((month, index) => `
+        <div class="bar-column">
+          <div class="bar" style="height: ${monthValues[index]}%"></div>
+          <span class="bar-label">${month}</span>
+        </div>
+      `)
+      .join("");
+  }
+});

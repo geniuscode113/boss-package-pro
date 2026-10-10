@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Boss Package Pro</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body class="admin-page">
+    <header class="admin-header">
+      <div class="container admin-header-wrap">
+        <a href="index.html" class="brand brand-small">
+          <span class="brand-mark">BP</span>
+          <span>Boss Package Pro</span>
+        </a>
+
+        <div class="admin-actions">
+          <span class="admin-pill" id="authMode">Checking session...</span>
+          <button class="btn btn-secondary" id="logoutButton" type="button">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="container dashboard-shell">
+        <aside class="sidebar">
+          <h3>Dashboard</h3>
+          <nav>
+            <a href="#overview">Overview</a>
+            <a href="#orders">Orders</a>
+            <a href="#inventory">Inventory</a>
+            <a href="#analytics">Analytics</a>
+          </nav>
+        </aside>
+
+        <section class="content-panel" id="overview">
+          <div class="page-head">
+            <div>
+              <p class="section-tag">Overview</p>
+              <h1>Welcome back, Admin</h1>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card accent">
+              <p>Total Orders</p>
+              <h3 id="totalOrders">0</h3>
+            </article>
+            <article class="stat-card success">
+              <p>Completed</p>
+              <h3 id="completedOrders">0</h3>
+            </article>
+            <article class="stat-card warning">
+              <p>Pending</p>
+              <h3 id="pendingOrders">0</h3>
+            </article>
+            <article class="stat-card info">
+              <p>Revenue</p>
+              <h3 id="totalRevenue">TZS 0</h3>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="panel" id="orders">
+              <h2>Recent orders</h2>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Service</th>
+                      <th>Status</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="panel" id="inventory">
+              <h2>Inventory</h2>
+              <ul class="inventory-list" id="inventoryList"></ul>
+            </div>
+          </div>
+
+          <div class="panel analytics-panel" id="analytics">
+            <h2>Business analytics</h2>
+            <div class="chart-bars" id="chartBars"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>
